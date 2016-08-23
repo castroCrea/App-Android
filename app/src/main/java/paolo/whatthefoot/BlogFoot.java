@@ -5,6 +5,13 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Bundle;
+import android.support.v4.view.MotionEventCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +32,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubInterstitial;
@@ -37,6 +45,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
     private WebView mWebView;
     private MoPubView moPubView;
     private MoPubInterstitial mInterstitial;
+    public SwipeRefreshLayout swipeRefreshLayout;
     private TextView t;
     private ImageView i;
     public static String url = "http://preprod.befoot.pm0s.com";
@@ -78,23 +87,24 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
          * SET ALL BUTTON
          */
 
+        /**
+         * Title clic
+         */
         t = (TextView)findViewById(R.id.toolbar_title);
         t.setOnClickListener(this);
 
+        /**
+         * Refresh
+         */
         i = (ImageView)findViewById(R.id.refresh);
         i.setOnClickListener(this);
 
         i.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                findViewById(R.id.activity_blog_foot_webview).setVisibility(View.GONE);
+                findViewById(R.id.swipe).setVisibility(View.GONE);
 
-                WebSettings webSettings = mWebView.getSettings();
-                webSettings.setUserAgentString("webview_android");
-                webSettings.setJavaScriptEnabled(true);
-                webSettings.setAppCacheEnabled(true);
-                webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-                webSettings.setSupportMultipleWindows(true);
+                setWebView();
                 mWebView.reload();
                 mWebView.setWebViewClient(new AppWebViewClient());
             }
@@ -112,7 +122,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
          */
         action_actus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                findViewById(R.id.activity_blog_foot_webview).setVisibility(View.GONE);
+                findViewById(R.id.swipe).setVisibility(View.GONE);
 
                 action_actus.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 action_actus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -121,19 +131,14 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
                 action_classement.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 action_classement.setTextColor(getResources().getColor(R.color.black));
 
-                WebSettings webSettings = mWebView.getSettings();
-                webSettings.setUserAgentString("webview_android");
-                webSettings.setJavaScriptEnabled(true);
-                webSettings.setAppCacheEnabled(true);
-                webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-                webSettings.setSupportMultipleWindows(true);
+                setWebView();
                 mWebView.loadUrl(BlogFoot.url);
                 mWebView.setWebViewClient(new AppWebViewClient());
             }
         });
         action_classement.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                findViewById(R.id.activity_blog_foot_webview).setVisibility(View.GONE);
+                findViewById(R.id.swipe).setVisibility(View.GONE);
 
                 action_classement.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 action_classement.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -142,19 +147,14 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
                 action_match.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 action_match.setTextColor(getResources().getColor(R.color.black));
 
-                WebSettings webSettings = mWebView.getSettings();
-                webSettings.setUserAgentString("webview_android");
-                webSettings.setJavaScriptEnabled(true);
-                webSettings.setAppCacheEnabled(true);
-                webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-                webSettings.setSupportMultipleWindows(true);
+                setWebView();
                 mWebView.loadUrl(BlogFoot.url + "/classement/");
                 mWebView.setWebViewClient(new AppWebViewClient());
             }
         });
         action_match.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                findViewById(R.id.activity_blog_foot_webview).setVisibility(View.GONE);
+                findViewById(R.id.swipe).setVisibility(View.GONE);
 
                 action_match.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 action_match.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -163,12 +163,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
                 action_classement.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 action_classement.setTextColor(getResources().getColor(R.color.black));
 
-                WebSettings webSettings = mWebView.getSettings();
-                webSettings.setUserAgentString("webview_android");
-                webSettings.setJavaScriptEnabled(true);
-                webSettings.setAppCacheEnabled(true);
-                webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-                webSettings.setSupportMultipleWindows(true);
+                setWebView();
                 mWebView.loadUrl(BlogFoot.url + "/direct-resultats/");
                 mWebView.setWebViewClient(new AppWebViewClient());
             }
@@ -188,12 +183,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
 
         mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
 
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setUserAgentString("webview_android");
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setSupportMultipleWindows(true);
+        setWebView();
         mWebView.loadUrl(BlogFoot.url);
         mWebView.setWebViewClient(new AppWebViewClient());
 
@@ -212,7 +202,57 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
 
+        /**
+         * WONDERPUSH
+         */
         WonderPush.initialize(this);
+
+
+        /**
+         * Swip down refresh
+         */
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+    }
+
+
+    /**
+     * swipe down refresh
+     */
+    OnRefreshListener onRefreshListener = new OnRefreshListener() {
+
+        @Override
+        public void onRefresh() {
+
+            swipeRefreshLayout.setRefreshing(true);
+            ( new Handler()).postDelayed(new Runnable(){
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    findViewById(R.id.swipe).setVisibility(View.GONE);
+
+                    setWebView();
+                    mWebView.reload();
+                    mWebView.setWebViewClient(new AppWebViewClient());
+                }
+            }, 500);
+
+        }
+    };
+
+    /**
+     * Set setting for the webView
+     */
+
+    public void setWebView(){
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setUserAgentString("webview_android");
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setUserAgentString("Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3");
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setSupportMultipleWindows(true);
     }
 
     private class AppWebViewClient extends WebViewClient{
@@ -291,7 +331,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
             super.onPageFinished(view, url);
 
             progressBar.setVisibility(view.GONE);
-            findViewById(R.id.activity_blog_foot_webview).setVisibility(View.VISIBLE);
+            findViewById(R.id.swipe).setVisibility(View.VISIBLE);
         }
 
 
@@ -349,7 +389,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
         final Button action_classement = (Button) findViewById(R.id.action_classement);
         final Button action_match = (Button) findViewById(R.id.action_match);
 
-        findViewById(R.id.activity_blog_foot_webview).setVisibility(View.GONE);
+        findViewById(R.id.swipe).setVisibility(View.GONE);
 
         action_actus.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         action_actus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -358,12 +398,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
         action_classement.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         action_classement.setTextColor(getResources().getColor(R.color.black));
 
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setUserAgentString("webview_android");
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setSupportMultipleWindows(true);
+        setWebView();
         mWebView.loadUrl(BlogFoot.url);
         mWebView.setWebViewClient(new AppWebViewClient());
     }
@@ -375,12 +410,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setUserAgentString("webview_android");
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setSupportMultipleWindows(true);
+        setWebView();
 
         final Button action_actus = (Button) findViewById(R.id.action_actus);
         final Button action_classement = (Button) findViewById(R.id.action_classement);
@@ -388,7 +418,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
 
         switch (item.getItemId()) {
             case R.id.action_actus:
-                findViewById(R.id.activity_blog_foot_webview).setVisibility(View.GONE);
+                findViewById(R.id.swipe).setVisibility(View.GONE);
 
                 action_actus.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 action_actus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -402,7 +432,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
                 return true;
 
             case R.id.action_classement:
-                findViewById(R.id.activity_blog_foot_webview).setVisibility(View.GONE);
+                findViewById(R.id.swipe).setVisibility(View.GONE);
 
                 action_classement.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 action_classement.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -416,7 +446,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
                 return true;
 
             case R.id.action_match:
-                findViewById(R.id.activity_blog_foot_webview).setVisibility(View.GONE);
+                findViewById(R.id.swipe).setVisibility(View.GONE);
 
                 action_match.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 action_match.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -430,7 +460,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
                 return true;
 
             case R.id.action_apropos:
-                findViewById(R.id.activity_blog_foot_webview).setVisibility(View.GONE);
+                findViewById(R.id.swipe).setVisibility(View.GONE);
 
                 action_match.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 action_match.setTextColor(getResources().getColor(R.color.black));
@@ -444,7 +474,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
                 return true;
 
             default:
-                findViewById(R.id.activity_blog_foot_webview).setVisibility(View.GONE);
+                findViewById(R.id.swipe).setVisibility(View.GONE);
 
                 action_match.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 action_match.setTextColor(getResources().getColor(R.color.black));
@@ -586,4 +616,5 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
     /**
      * END MO PUB VIEW
      */
+
 }
