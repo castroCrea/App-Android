@@ -47,7 +47,6 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
     private MoPubInterstitial mInterstitial;
     public SwipeRefreshLayout swipeRefreshLayout;
     private TextView t;
-    private ImageView i;
     public static String url = "http://preprod.befoot.pm0s.com";
 
 
@@ -92,23 +91,6 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
          */
         t = (TextView)findViewById(R.id.toolbar_title);
         t.setOnClickListener(this);
-
-        /**
-         * Refresh
-         */
-        i = (ImageView)findViewById(R.id.refresh);
-        i.setOnClickListener(this);
-
-        i.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                findViewById(R.id.swipe).setVisibility(View.GONE);
-
-                setWebView();
-                mWebView.reload();
-                mWebView.setWebViewClient(new AppWebViewClient());
-            }
-        });
 
         /**
          * All MY BUTTON
@@ -230,7 +212,6 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
                 @Override
                 public void run() {
                     swipeRefreshLayout.setRefreshing(false);
-                    findViewById(R.id.swipe).setVisibility(View.GONE);
 
                     setWebView();
                     mWebView.reload();
