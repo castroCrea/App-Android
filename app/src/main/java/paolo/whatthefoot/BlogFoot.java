@@ -47,7 +47,7 @@ public class BlogFoot extends AppCompatActivity implements View.OnClickListener,
     private MoPubInterstitial mInterstitial;
     public SwipeRefreshLayout swipeRefreshLayout;
     private TextView t;
-    public static String url = "http://preprod.befoot.pm0s.com";
+    public static String url = "http://infos-foot.pm0s.com";
 
 
     ProgressBar progressBar;
