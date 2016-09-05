@@ -4,8 +4,9 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
 
+
     defaultConfig {
-        applicationId "paolo.whatthefoot"
+        applicationId "paolo.LCActus"
         manifestPlaceholders = [
                 wonderpushDefaultActivity:  '.BlogFoot', // 2
                 wonderpushNotificationIcon: '@drawable/ic_launcher'    // 3
@@ -13,15 +14,15 @@ android {
         minSdkVersion 21
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0"
+        versionName "1"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            debuggable true
+            debuggable false
         }
     }
 }
@@ -36,6 +37,9 @@ dependencies {
     compile('com.mopub:mopub-sdk:4.7.1@aar') {
         transitive = true
     }
+    // [START gms_compile]
+    compile 'com.google.android.gms:play-services-analytics:9.4.0'
+    // [END gms_compile]
 }
 
 allprojects {
@@ -43,3 +47,5 @@ allprojects {
         jcenter()
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

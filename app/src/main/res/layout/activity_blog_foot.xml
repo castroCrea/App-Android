@@ -23,49 +23,83 @@
         android:layout_height="wrap_content"
         android:id="@+id/LoadingText"
         android:layout_width="fill_parent"
-        android:text="Chargement, veuillez patienter..."
-        android:textSize="20sp"
-        android:paddingTop="100dp"
+        android:text="Chargement,\r\nveuillez patienter..."
+        android:textSize="18sp"
+        android:paddingTop="200dp"
         android:gravity="center_horizontal">
     </TextView>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+        <!--android:id="@+id/swipe"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/colorPrimaryDark"-->
+        <!--android:layout_marginTop="60dp"-->
+        <!--&gt;-->
+
+        <!--<ScrollView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" >-->
+    <WebView
+        android:id="@+id/activity_blog_foot_webview_match"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:visibility="visible"
         android:layout_marginTop="60dp"
-        >
+        />
+    <WebView
+        android:id="@+id/activity_blog_foot_webview_classement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:visibility="visible"
+        android:layout_marginTop="60dp"
+        />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+    <WebView
+        android:id="@+id/activity_blog_foot_webview_apropos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:visibility="visible"
+        android:layout_marginTop="60dp"
+        />
 
-            <WebView
-                android:id="@+id/activity_blog_foot_webview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:visibility="visible"
-                />
+    <WebView
+        android:id="@+id/activity_blog_foot_webview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:visibility="visible"
+        android:layout_marginTop="60dp"
+        />
+        <!--</ScrollView>-->
 
-        </ScrollView>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
     <com.mopub.mobileads.MoPubView
         android:id="@+id/adview"
         android:layout_alignParentBottom="true"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="47dp"
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:src="@drawable/gradient_small"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/GradientDescription"
         />
 
     <include
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_height="50dp"/>
+        android:layout_height="47dp"/>
+
 
     <include
         layout="@layout/toptoolbar"

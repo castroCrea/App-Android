@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "538437846350",
+    "firebase_url": "https://ldc-infos-et-actualites.firebaseio.com",
+    "project_id": "ldc-infos-et-actualites",
+    "storage_bucket": "ldc-infos-et-actualites.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538437846350:android:e8a2e0933eebdd4b",
+        "android_client_info": {
+          "package_name": "paolo.LCActus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538437846350-fhoa95clv7nbtek1k2178vp12a95me4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLKjx-Vv6vYi8IlYXvWjObkRg_woJQ1Uk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

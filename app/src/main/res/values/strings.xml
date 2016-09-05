@@ -1,8 +1,11 @@
 <resources>
-    <string name="app_name">Infos Foot</string>
+    <string name="app_name">LDC Actus</string>
+    <string name="app_title">Ligue des Champions</string>
     <string name="action_settings">Settings</string>
     <string name="classement">Classements</string>
     <string name="actus">Actus</string>
     <string name="matches">Matchs</string>
     <string name="Apropos">À propos</string>
+    <string name="RefreshDescription">refresh icon</string>
+    <string name="GradientDescription">gradient decoration image</string>
 </resources>
